@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 offset-md-1">
+    <hr class="my-5">
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3 class="mb-0">Ordens de Serviço</h3>
+      </div>
+      <div class="card-body">
+        <div class="row mt-4">
+          <div class="col-sm-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Paciente</th>
+                  <th>Data de Cadastro</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let os of oss | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                  <td>{{os.id}}</td>
+                  <td>{{os.paciente.nome}}</td>
+                  <td>{{os.data}}</td>
+                  <td><a class="btn btn-success" href="/imprimir-os/{{os.id}}" target="_blank" title="Imprimir Protocolo"><i class="fa fa-print"></i></a></td>
+                  <td><a class="btn btn-primary" href="#" (click)="detalhesOS(os.id)"><i class="fa fa-list-alt"></i></a></td>
+                </tr>
+              </tbody>
+
+
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+          <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="oss.length"></ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

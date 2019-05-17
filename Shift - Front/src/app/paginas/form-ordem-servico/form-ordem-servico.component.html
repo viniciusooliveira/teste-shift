@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 offset-md-1">
+    <hr class="my-5">
+    <div class="card card-outline-secondary">
+      <div class="card-header">
+        <h3 class="mb-0">{{titulo}}</h3>
+      </div>
+      <div class="card-body">
+        <div class="row mt-4">
+          <div class="col-sm-6 pb-3">
+            <label>Paciente</label>
+            <select class="form-control" [(ngModel)]="os.paciente" (ngModelChange)="selecionarPaciente($event)">
+              <option *ngFor="let item of listaPacientes" [ngValue]="item">{{item.nome}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6 pb-3">
+            <label>Médico</label>
+            <select class="form-control" [(ngModel)]="os.medico" (ngModelChange)="selecionarMedico($event)">
+              <option *ngFor="let item of listaMedicos" [ngValue]="item">{{item.nome}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6 pb-3">
+            <label>Posto de Coleta</label>
+            <select class="form-control" [(ngModel)]="os.postoColeta" (ngModelChange)="selecionarPostoColeta($event)">
+              <option *ngFor="let item of listaPostos" [ngValue]="item">{{item.descricao}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6 pb-3">
+            <label>Convênio</label>
+            <select class="form-control" [(ngModel)]="os.convenio" (ngModelChange)="selecionarConvenio($event)">
+              <option *ngFor="let item of listaConvenios" [ngValue]="item">{{item.descricao}}</option>
+            </select>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="float-right">
+              <input class="btn btn-primary" [disabled]="!os.paciente || !os.medico || !os.postoColeta || !os.convenio"
+                (click)="adicionarExame()" type="button" value="Adicionar Exame">
+            </div>
+          </div>
+
+          <div class="col-sm-12 pb-3">
+            <div class="row" *ngFor="let exame of os.exames; let i = index">
+              <div class="col-sm-12" *ngIf="i>0">
+                <hr>
+              </div>
+              <div class="col-sm-4 pb-3">
+                <label>Exame</label>
+                <select class="form-control" [(ngModel)]="exame.exame" (ngModelChange)="selecionarExame($event, i)">
+                  <option *ngFor="let item of listaExames" [ngValue]="item">{{item.descricao}}</option>
+                </select>
+              </div>
+              <div class="col-sm-3 pb-3">
+                <label>Horário de Entrega</label>
+                <ngb-timepicker [(ngModel)]="exame.horario" (ngModelChange)="alterarHorario($event, i)"
+                  [spinners]="false"></ngb-timepicker>
+              </div>
+              <div class="col-sm-3 pb-3">
+                <label>Preço</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">R$</div>
+                  </div>
+                  <input type="text" disabled [(ngModel)]="exame.preco" class="form-control">
+                </div>
+              </div>
+              <div class="col-sm-2 pb-3">
+                <label>&nbsp;</label>
+                <button class="btn btn-danger btn-block" (click)="removerExame(i)" title="Remover Exame">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="float-right">
+          <input class="btn btn-secondary" style="margin-right: 30px" type="reset" value="Cancelar">
+          <input class="btn btn-primary" (click)="enviar()"
+            [disabled]="!os.paciente || !os.medico || !os.postoColeta || !os.convenio || os.exames.length <= 0"
+            type="submit" value="Enviar">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

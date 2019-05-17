@@ -1,0 +1,40 @@
+<div class="row" *ngIf="os && os.id>0">
+  <div class="col-sm-12">
+    <div class="borda">
+      <div class="row">
+        <div class="col-sm-12">
+
+          <h2>Ordem de Serviço #{{os.id}}</h2>
+
+          <p><b>Paciente:</b> {{os.paciente.nome}}</p>
+          <p><b>Médico:</b> {{os.medico.nome}}</p>
+          <p><b>Convênio:</b> {{os.convenio.descricao}}</p>
+          <p><b>Posto de Coleta:</b> {{os.postoColeta.descricao}}</p>
+
+          <div class="alert alert-info" *ngIf="imprimir">
+            Para retirar o resultado dos exames, comparecer ao Posto de Coleta após a data informada na tabela abaixo.
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Exame</th>
+                <th>Data de Entrega</th>
+                <th>Valor</th>
+                <th>Material Biológico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let exame of os.exames">
+                <th>{{exame.exame.descricao}}</th>
+                <td>{{exame.dataEntrega}} às {{exame.entregaResultado | slice: 0:5}}</td>
+                <td>R$ {{exame.precoString}}</td>
+                <td>{{exame.exame.materialBiologico}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
