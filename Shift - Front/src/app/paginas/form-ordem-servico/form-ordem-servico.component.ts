@@ -23,7 +23,8 @@ import { Router } from '@angular/router';
 export class FormOrdemServicoComponent implements OnInit {
 
   titulo = 'Nova Ordem de Serviço';
-  mensagem: string;
+
+  loading = false;
 
 
   listaPacientes: Paciente[];
@@ -78,9 +79,11 @@ export class FormOrdemServicoComponent implements OnInit {
       this.os.idConvenio = valor.id;
       if (this.os.exames.length > 0) {
         for (let exame of this.os.exames) {
+          this.loading = true;
           this.precoExameService.get(this.os.idConvenio, exame.idExame).subscribe(x => {
             if (x && x.id > 0) {
               exame.preco = x.preco;
+              this.loading = false;
             }
           });
         }
@@ -91,9 +94,11 @@ export class FormOrdemServicoComponent implements OnInit {
   selecionarExame = (valor: OrdemServicoExame, index: number) => {
     if (valor && this.os.exames) {
       this.os.exames[index].idExame = valor.id;
+      this.loading = true;
       this.precoExameService.get(this.os.idConvenio, valor.id).subscribe(x => {
         if (x && x.id > 0) {
           this.os.exames[index].preco = x.preco;
+          this.loading = false;
         }
       });
     }
@@ -102,9 +107,11 @@ export class FormOrdemServicoComponent implements OnInit {
   alterarHorario = (valor: any, index: number) => {
     if (valor && this.os.exames) {
       this.os.exames[index].entregaResultado = `${valor.hour}:${valor.minute}`;
+      this.loading = true;
       this.precoExameService.get(this.os.idConvenio, valor.id).subscribe(x => {
         if (x && x.id > 0) {
           this.os.exames[index].preco = x.preco;
+          this.loading = false;
         }
       });
     }
@@ -123,10 +130,12 @@ export class FormOrdemServicoComponent implements OnInit {
       e.preco = e.preco.replace(',', '.');
       return e;
     });
+    this.loading = true;
     this.ordemServicoService.post(this.os).subscribe(x => {
       this.toastr.success(`Ordem de Serviço #${x} criada com sucesso!`).onHidden.subscribe(e => {
         window.open(`/imprimir-os/${x}`);
         this.router.navigate(['/']);
+        this.loading = false;
       });
     },
     error => {

@@ -15,6 +15,7 @@ export class ListOrdemServicoComponent implements OnInit {
   page = 1;
   pageSize = 10;
   oss: OrdemServico[] = [];
+  loading = true;
 
   constructor(
     private service: OrdemServicoService,
@@ -24,6 +25,7 @@ export class ListOrdemServicoComponent implements OnInit {
   ngOnInit() {
     this.service.getAll().subscribe(x => {
       this.oss = x;
+      this.loading = false;
     });
   }
 

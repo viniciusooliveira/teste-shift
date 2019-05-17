@@ -1,10 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+
 @import "~bootstrap/scss/bootstrap";
 
-// regular style toast 
-// @import '~ngx-toastr/toastr';
- 
-// bootstrap style toast 
-// or import a bootstrap 4 alert styled design (SASS ONLY) 
-// should be after your bootstrap imports, it uses bs4 variables, mixins, functions 
 @import '~ngx-toastr/toastr-bs4-alert';
+
+.loading{
+    position: relative;
+
+    &::after{
+        content: " ";
+        background-image: url('/assets/images/spinner.gif');
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255,255,255,0.5);
+    }
+}

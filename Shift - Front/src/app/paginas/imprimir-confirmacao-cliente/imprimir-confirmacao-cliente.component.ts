@@ -13,6 +13,7 @@ export class ImprimirConfirmacaoClienteComponent  implements OnInit {
 
   os = new OrdemServico();
   imprimir = true;
+  loading = true;
 
   constructor(
     private service: OrdemServicoService,
@@ -25,6 +26,7 @@ export class ImprimirConfirmacaoClienteComponent  implements OnInit {
       if (parametros.id && parametros.id > 0) {
         this.service.get(parametros.id).subscribe(x => {
           this.os = x;
+          this.loading = false;
           window.setTimeout(() => {
             window.print();
           }, 500);
@@ -38,6 +40,7 @@ export class ImprimirConfirmacaoClienteComponent  implements OnInit {
   public exibir(id){
     this.service.get(id).subscribe(x => {
       this.os = x;
+      this.loading = false;
     });
   }
 
